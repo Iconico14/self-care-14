@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self Care Check Journal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Allura&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Comfortaa', cursive;
+            background-color: #f3f0ff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #4a3b61;
+        }
+
+        header {
+            background-color: #d6c3e6;
+            width: 100%;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin: 0;
+            color: #4a3b61;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .input-container, .page {
+            display: none;
+            text-align: center;
+        }
+
+        .input-container.active, .page.active {
+            display: block;
+        }
+
+        input[type="text"], input[type="date"] {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #d6c3e6;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #b5a0d1;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #9b78b1;
+        }
+
+        .nav-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .nav-buttons button {
+            background-color: #d6c3e6;
+            color: #4a3b61;
+            border: 1px solid #4a3b61;
+        }
+
+        .nav-buttons button:hover {
+            background-color: #4a3b61;
+            color: white;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            margin: 20px auto;
+        }
+
+        .checklist li {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+
+        .emoji {
+            font-size: 20px;
+            margin-right: 10px;
+        }
+
+        .quote {
+            font-family: 'Allura', cursive;
+            font-size: 1.5rem;
+            color: #4a3b61;
+            margin-top: 20px;
+            text-align: center;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>✨ Self Care Check Journal ✨</h1>
+    </header>
+
+    <div class="container">
+        <!-- Welcome Screen -->
+        <div id="welcome" class="input-container active">
+            <h2>Hey there! 👋 What should I call you?</h2>
+            <input type="text" id="username" placeholder="Enter your name">
+            <button onclick="startJourney()">Start 📝</button>
+        </div>
+
+        <!-- Sign Up Page -->
+        <div id="signup" class="input-container">
+            <h2>Sign Up 🎉</h2>
+            <input type="text" id="name" placeholder="Your Name">
+            <input type="date" id="dob">
+            <button onclick="createDashboard()">Submit 🆗</button>
+        </div>
+
+        <!-- Dashboard Page -->
+        <div id="dashboard" class="page">
+            <h2>Welcome, <span id="user-name"></span>! 🌟</h2>
+            <p>Select a section to view and edit your weekly checklist:</p>
+            <div class="nav-buttons">
+                <button onclick="showPage('skincare')">💆 Skincare</button>
+                <button onclick="showPage('personal')">🧘 Personal</button>
+                <button onclick="showPage('gratitude')">🙏 Gratitude</button>
+                <button onclick="showPage('school')">📚 School</button>
+                <button onclick="showPage('book-list')">📖 Book List</button>
+                <button onclick="showPage('study-planner')">📝 Study Planner</button>
+                <button onclick="showPage('diet')">🥗 Diet</button>
+            </div>
+            <div class="quote" id="quote"></div>
+        </div>
+
+        <!-- Skincare Page -->
+        <div id="skincare" class="page">
+            <h3>💆 Skincare Checklist</h3>
+            <ul class="checklist">
+                <li><input type="checkbox" id="cleanse"> 🧖 Cleanse</li>
+                <li><input type="checkbox" id="facewash"> 🧼 Facewash</li>
+                <li><input type="checkbox" id="moisturize"> 💧 Moisturize</li>
+                <li><input type="checkbox" id="sunscreen"> ☀️ Sunscreen</li>
+                <li><input type="checkbox" id="exfoliate"> 🔄 Exfoliate</li>
+                <li><input type="checkbox" id="serum"> 💧 Apply Serum</li>
+                <li><input type="checkbox" id="night-cream"> 🌙 Night Cream</li>
+                <li><input type="checkbox" id="eye-cream"> 👁️ Eye Cream</li>
+                <li><input type="checkbox" id="face-mask"> 🛁 Face Mask</li>
+                <li><input type="checkbox" id="hydrate"> 💦 Hydrate</li>
+            </ul>
+            <div class="nav-buttons">
+                <button onclick="saveProgress('skincare')">Save 🛡️</button>
+                <button onclick="showPage('dashboard')">Back ⬅️</button>
+            </div>
+            <div class="quote" id="quote"></div>
+        </div>
+
+        <!-- Personal Page -->
+        <div id="personal" class="page">
+            <h3>🧘 Personal Checklist</h3>
+            <ul class="checklist">
+                <li><input type="checkbox" id="meditate"> 🧘 Meditate</li>
+                <li><input type="checkbox" id="journaling"> 📝 Journaling</li>
+                <li><input type="checkbox" id="relax"> 🌴 Relax</li>
+                <li><input type="checkbox" id="walk"> 🚶 Walk</li>
+                <li><input type="checkbox" id="deep-breathing"> 😌 Deep Breathing</li>
+                <li><input type="checkbox" id="positive-affirmation"> 💭 Positive Affirmation</li>
+                <li><input type="checkbox" id="hydrate-personal"> 💦 Stay Hydrated</li>
+                <li><input type="checkbox" id="sleep"> 💤 Sleep Early</li>
+                <li><input type="checkbox" id="screen-free-time"> 🚫 Screen Time</li>
+                <li><input type="checkbox" id="hobby"> 🎨 Engage in a Hobby</li>
+            </ul>
+            <div class="nav-buttons">
+                <button onclick="saveProgress('personal')">Save 🛡️</button>
+                <button onclick="showPage('dashboard')">Back ⬅️</button>
+            </div>
+            <div class="quote" id="quote"></div>
+        </div>
+
+        <!-- Gratitude Page -->
+        <div id="gratitude" class="page">
+            <h3>🙏 Gratitude Checklist</h3>
+            <ul class="checklist">
+                <li><input type="checkbox" id="gratitude-entry"> 🙏 Write Gratitude Entry</li>
+                <li><input type="checkbox" id="call"> 📞 Call a Loved One</li>
+                <li><input type="checkbox" id="thank-you"> 🙌 Thank Someone</li>
+                <li><input type="checkbox" id="reflect"> 🪞 Reflect on Blessings</li>
+                <li><input type="checkbox" id="meditate-gratitude"> 🧘 Meditate on Gratitude</li>
+                <li><input type="checkbox" id="daily-positivity"> ✨ Practice Daily Positivity</li>
+                <li><input type="checkbox" id="smile"> 😄 Smile More</li>
+                <li><input type="checkbox" id="gratitude-meditation"> 🧘 Gratitude Meditation</li>
+                <li><input type="checkbox" id="nature-time"> 🌿 Spend Time in Nature</li>
+                <li><input type="checkbox" id="listen-to-music"> 🎧 Listen to Uplifting Music</li>
+            </ul>
+            <div class="nav-buttons">
+                <button onclick="saveProgress('gratitude')">Save 🛡️</button>
+                <button onclick="showPage('dashboard')">Back ⬅️</button>
+            </div>
+            <div class="quote" id="quote"></div>
+        </div>
+
+        <!-- School Page -->
+        <div id="school" class="page">
+            <h3>📚 School Checklist</h3>
+            <ul class="checklist">
+                <li><input type="checkbox" id="study"> 📖 Study</li>
+                <li><input type="checkbox" id="homework"> 🏡 Homework</li>
+                <li><input type="checkbox" id="exam-study"> 📝 Exam Prep</li>
+                <li><input type="checkbox" id="project"> 🛠️ Project Work</li>
+                <li><input type="checkbox" id="revision"> 🔄 Revision</li>
+                <li><input type="checkbox" id="group-study"> 👥 Group Study</li>
+                <li><input type="checkbox" id="notes"> 📝 Take Notes</li>
+                <li><input type="checkbox" id="quiz"> 📝 Quiz Practice</li>
+                <li><input type="checkbox" id="reading"> 📚 Reading</li>
+                <li><input type="checkbox" id="assignment"> 🖊️ Assignment</li>
+            </ul>
+            <div class="nav-buttons">
+                <button onclick="saveProgress('school')">Save 🛡️</button>
+                <button onclick="showPage('dashboard')">Back ⬅️</button>
+            </div>
+            <div class="quote" id="quote"></div>
+        </div>
+
+        <!-- Repeat for other sections like Book List, Study Planner, and Diet -->
+    </div>
+
+    <!-- Javascript -->
+    <script>
+        const quotes = [
+            "Take time to do what makes your soul happy. 🌿",
+            "Self-care is not a luxury, it's a necessity. 🌱",
+            "You can't pour from an empty cup. 🧡",
+            "Invest in your mind and body. 🧘",
+            "Be kind to yourself. 💖",
+            "Every day may not be good, but there is something good in every day. 🌸"
+        ];
+
+        let username = '';
+
+        function startJourney() {
+            username = document.getElementById('username').value;
+            if (username) {
+                document.getElementById('welcome').classList.remove('active');
+                document.getElementById('signup').classList.add('active');
+            } else {
+                alert('Please enter your name!');
+            }
+        }
+
+        function createDashboard() {
+            username = document.getElementById('name').value;
+            if (username && document.getElementById('dob').value) {
+                document.getElementById('signup').classList.remove('active');
+                document.getElementById('dashboard').classList.add('active');
+                document.getElementById('user-name').innerText = username;
+                showRandomQuote();
+            } else {
+                alert('Please fill out all fields!');
+            }
+        }
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            showRandomQuote();
+        }
+
+        function showRandomQuote() {
+            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            document.getElementById('quote').innerText = randomQuote;
+        }
+
+        function saveProgress(pageId) {
+            alert(`Progress saved for ${pageId}!`);
+            showPage('dashboard');
+        }
+    </script>
+</body>
+</html>
